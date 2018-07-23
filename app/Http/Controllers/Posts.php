@@ -34,7 +34,7 @@ class Posts extends ApiController
         }
         if ($data->isEmpty())
             return $this->noContentResponse("Fetched Successfully");
-        return $this->successResponse('Fetched Successfully', $data);
+        return $this->successResponse('Fetched Successfully', ['posts' => $data]);
     }
 
     /**
@@ -54,7 +54,7 @@ class Posts extends ApiController
         }
         if (!$data)
             return $this->noContentResponse("Fetched Successfully");
-        return $this->successResponse('Fetched Successfully', $data);
+        return $this->successResponse('Fetched Successfully', ['post' => $data]);
     }
 
     /**
