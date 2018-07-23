@@ -16,6 +16,11 @@ use Validator;
 class Posts extends ApiController
 {
 
+    /**
+     * return all posts data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -32,6 +37,12 @@ class Posts extends ApiController
         return $this->successResponse('Fetched Successfully', $data);
     }
 
+    /**
+     * return specific post by id
+     *
+     * @param $id : for post
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         try {
@@ -46,15 +57,25 @@ class Posts extends ApiController
         return $this->successResponse('Fetched Successfully', $data);
     }
 
+    /**
+     *
+     * create new post
+     *
+     * @param Request $request :post information
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         try {
 
+            //validation rules
             $rules = [
                 'details' => 'required',
                 'user_id' => 'required|Integer'
             ];
+            //validate request inputs
             $validator = Validator::make($request->all(), $rules);
+            //return response with status 422 that mean validation error
             if ($validator->fails()) {
                 return $this->validationErrorResponse($validator);
             }
@@ -71,13 +92,22 @@ class Posts extends ApiController
         return $this->createResponse($createdPost);
     }
 
+    /**
+     *update post
+     *
+     * @param Request $request : form data
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         try {
             $rules = [
                 'details' => 'required',
             ];
+            //validate request inputs
             $validator = Validator::make($request->all(), $rules);
+            //return response with status 422 that mean validation error
             if ($validator->fails()) {
                 return $this->validationErrorResponse($validator);
             }
@@ -94,6 +124,12 @@ class Posts extends ApiController
         return $this->failedResponse('Updated Failed');
     }
 
+    /**
+     *
+     * delete post by id
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete($id)
     {
         try {
