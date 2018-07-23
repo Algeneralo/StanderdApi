@@ -90,7 +90,7 @@ class Posts extends ApiController
             return $this->internalErrorResponse($exception);
         }
         if ($updatedStatus)
-            return $this->noContentResponses("Updated Successfully");
+            return $this->noContentResponse("Updated Successfully");
         return $this->failedResponse('Updated Failed');
     }
 
@@ -102,7 +102,7 @@ class Posts extends ApiController
             return $this->internalErrorResponse($exception);
         }
         if ($updatedStatus)
-            return $this->noContentResponses("Deleted successfully");
+            return $this->noContentResponse("Deleted successfully");
         return $this->failedResponse('Deleted Failed');
     }
 }

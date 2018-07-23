@@ -14,7 +14,7 @@ class comments extends Seeder
         $faker = Faker\Factory::create();
         for ($counter = 0; $counter < 40; $counter++) {
             DB::table('comments')->insert([
-                'details' => $faker->realText(),
+                'details' => $faker->realText(20),
                 'post_id' => rand(1, 10),
                 'user_id' => rand(1, 2),
                 'created_at' => \Carbon\Carbon::now(),

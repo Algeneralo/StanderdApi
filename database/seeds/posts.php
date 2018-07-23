@@ -15,7 +15,7 @@ class posts extends Seeder
         $faker = Faker\Factory::create();
         for ($counter = 0; $counter < 10; $counter++) {
             DB::table('posts')->insert([
-                'details' => $faker->realText(),
+                'details' => $faker->realText(20),
                 'user_id' => rand(1, 2),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),

@@ -60,7 +60,7 @@ class ApiController extends BaseController
         return response()->json($array);
     }
 
-    public function noContentResponses($message = null)
+    public function noContentResponse($message = null)
     {
         $array = [
             "status" => NO_CONTENT,
