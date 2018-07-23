@@ -24,17 +24,18 @@ class Posts extends ApiController
     public function index()
     {
         try {
-            $data = PostModel::all();
-            foreach ($data as $key => $datum) {
-                $data[$key]['user'] = $data[$key]->user;
-                $data[$key]['comments'] = $data[$key]->comments;
+            $postsData = PostModel::paginate(8);
+            foreach ($postsData as $key => $datum) {
+                $postsData[$key]['user'] = $postsData[$key]->user;
+                $postsData[$key]['comments'] = $postsData[$key]->comments;
             }
+
         } catch (\Exception $exception) {
             return $this->internalErrorResponse($exception);
         }
-        if ($data->isEmpty())
+        if ($postsData->isEmpty())
             return $this->noContentResponse("Fetched Successfully");
-        return $this->successResponse('Fetched Successfully', ['posts' => $data]);
+        return $this->successResponse('Fetched Successfully', ['posts' => $postsData]);
     }
 
     /**
@@ -46,15 +47,15 @@ class Posts extends ApiController
     public function show($id)
     {
         try {
-            $data = PostModel::where('id', $id)->first();
-            $data['user'] = $data->user;
-            $data['comments'] = $data->comments;
+            $postData = PostModel::where('id', $id)->first();
+            if (!$postData)
+                return $this->noContentResponse("Fetched Successfully");
+            $postData['user'] = $postData->user;
+            $postData['comments'] = $postData->comments;
         } catch (\Exception $exception) {
             return $this->internalErrorResponse($exception);
         }
-        if (!$data)
-            return $this->noContentResponse("Fetched Successfully");
-        return $this->successResponse('Fetched Successfully', ['post' => $data]);
+        return $this->successResponse('Fetched Successfully', ['post' => $postData]);
     }
 
     /**
