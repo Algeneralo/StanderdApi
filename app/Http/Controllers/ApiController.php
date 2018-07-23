@@ -30,6 +30,13 @@ Const INTERNAL_ERROR = 500;
 class ApiController extends BaseController
 {
 
+    /**
+     * @param int $status
+     * @param string $message
+     * @param array $data
+     * @param array $errors
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function generalResponse($status = OK, $message = '', $data = [], $errors = [])
     {
         $array = [
@@ -41,6 +48,13 @@ class ApiController extends BaseController
         return response()->json($array);
     }
 
+    /**
+     * this response is for fetch data that have result only
+     *
+     * @param $message
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function successResponse($message, $data = [])
     {
         $array = [
@@ -51,6 +65,10 @@ class ApiController extends BaseController
         return response()->json($array);
     }
 
+    /**
+     * @param $message
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function failedResponse($message)
     {
         $array = [
@@ -60,7 +78,14 @@ class ApiController extends BaseController
         return response()->json($array);
     }
 
-    public function noContentResponse($message = null)
+
+    /**
+     * this response is for (update,delete ,and fetch[only if there's no data])
+     *
+     * @param $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function noContentResponse($message)
     {
         $array = [
             "status" => NO_CONTENT,
@@ -69,6 +94,10 @@ class ApiController extends BaseController
         return response()->json($array);
     }
 
+    /**
+     * @param $data
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createResponse($data)
     {
         $array = [
@@ -79,6 +108,12 @@ class ApiController extends BaseController
         return response()->json($array);
     }
 
+    /**
+     * validation error in request data
+     *
+     * @param $validator
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function validationErrorResponse($validator)
     {
         $array = [
@@ -89,6 +124,12 @@ class ApiController extends BaseController
         return response()->json($array);
     }
 
+    /**
+     * system error
+     *
+     * @param \Exception $exception
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function internalErrorResponse(\Exception $exception)
     {
         $array = [
