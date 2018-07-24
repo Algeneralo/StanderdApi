@@ -20,11 +20,12 @@ Const FAILED = 202;
  * Request finished successfully, but there's no data
  */
 Const NO_CONTENT = 204;
-Const UNAUTHORIZED = 403;
 /**
- * There's an error in input validation
+ * There's an error in input validation and any bad requests
  */
-Const VALIDATION_ERROR = 422;
+Const BAD_REQUEST = 400;
+Const UNAUTHORIZED = 403;
+
 Const INTERNAL_ERROR = 500;
 
 class ApiController extends BaseController
@@ -117,7 +118,7 @@ class ApiController extends BaseController
     public function validationErrorResponse($validator)
     {
         $array = [
-            "status" => VALIDATION_ERROR,
+            "status" => BAD_REQUEST,
             "message" => $validator->errors()->first(),
             "errors" => $validator->errors(),
         ];
@@ -138,7 +139,7 @@ class ApiController extends BaseController
             "errors" => [
                 'code' => $exception->getCode(),
                 'message' => $exception->getMessage(),
-                'file' => $exception->getFile()
+//                'file' => $exception->getFile()
             ],
         ];
         return response()->json($array);

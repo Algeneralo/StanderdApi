@@ -3,11 +3,14 @@
 namespace App\Exceptions;
 
 use Exception;
+use FastRoute\BadRouteException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,14 +48,38 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-
+//
+//        if ($exception instanceof BadRouteException) {
+//            $array = [
+//                "status" => 400,
+//                "message" => "Internal Server Error, Please check the request link" . env('DOCUMENT_LINK'),
+//                "errors" => [
+//                    'code' => $exception->getCode(),
+//                    'message' => $exception->getMessage(),
+//                    'file' => $exception->getFile()
+//                ],
+//            ];
+//            return response()->json($array);
+//        }
+//        if ($exception instanceof NotFoundHttpException | $exception instanceof MethodNotAllowedHttpException) {
+//            $array = [
+//                "status" => 500,
+//                "message" => "Internal Server Error, Please check the request link" . env('DOCUMENT_LINK'),
+//                "errors" => [
+//                    'code' => $exception->getCode(),
+//                    'message' => $exception->getMessage(),
+//                    'file' => $exception->getFile()
+//                ],
+//            ];
+//            return response()->json($array);
+//        }
         $array = [
             "status" => 500,
             "message" => "Internal Server Error",
             "errors" => [
                 'code' => $exception->getCode(),
                 'message' => $exception->getMessage(),
-                'file' => $exception->getFile()
+//                'file' => $exception->getFile()
             ],
         ];
         return response()->json($array);
